@@ -1,3 +1,7 @@
+<<<<<<< HEAD
 Welcome to FSD
+=======
+hello world
+>>>>>>> 0acf88036b2f30d3cc0334f837a2e10138bdcca8
 file created in dev branch
 welcome to FSD
