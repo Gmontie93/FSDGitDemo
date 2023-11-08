@@ -1,14 +1,16 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
+
 const EnquiryList = () => {
+
 
    let [enquiries,setEnquiries] =  useState();
 //use axios, and use get on backend url to get enquiries
-  
+ 
 useEffect( () => {    
     async function fetchData() {
-        let resp =  await axios.get('http://localhost:3002/allenquiries');
+        let resp =  await axios.get(process.env.REACT_APP_BACKEND_URL + 'allenquiries');
         let data = await resp.data;  
         setEnquiries(data);
         console.log(data);
@@ -16,11 +18,12 @@ useEffect( () => {
       fetchData();    
   },[]);
 
+
   if(!enquiries) {
     <h3>Loading enquiries. Please wait. </h3>
   }
-  else { 
-    return ( 
+  else {
+    return (
 <div>
     <h3> Enquiries Received so far:</h3>
     <div class="table-responsive">
@@ -36,7 +39,7 @@ useEffect( () => {
         <tbody>
             {
                 enquiries.map(
-                    (elem) => { 
+                    (elem) => {
                         return <tr class="">
                             <td scope="row">{elem.ename}</td>
                             <td>{elem.email}</td>
@@ -46,7 +49,7 @@ useEffect( () => {
                     }
                 )
             }
-            
+           
            
         </tbody>
     </table>
@@ -56,6 +59,8 @@ useEffect( () => {
 }
 }
  
+
+
 
 
 export default EnquiryList;

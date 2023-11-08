@@ -26,7 +26,8 @@ function App() {
       // let data = await resp.json();
       // console.log(data);
 
-      let resp =  await axios.get('http://localhost:3002/');
+      //let resp =  await axios.get('http://localhost:3002/');
+      let resp =  await axios.get(process.env.REACT_APP_BACKEND_URL);
       let data = await resp.data;
       // //console.log(' data from json - ');
       //console.log(data);
@@ -53,6 +54,7 @@ function App() {
                   <Route path='/signup' element={<SignUp/>} />
                   <Route path='/login' element={<Login/>}/>
                   <Route path='/enquiries'  element={<EnquiryList/>}/>
+                  
                 </Routes>          
             <Footer/>
       </div>

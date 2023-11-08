@@ -6,7 +6,7 @@ import { useState } from "react";
 
         let [signUpObj,setSignupObj] = useState({name:'',email:'',password:''});
         let [signUpStatus, setSignUpStatus] = useState(false);
-        let [dupeUserMsg,setDupUserMsg] = useState('inital');
+        let [dupeUserMsg,setDupUserMsg] = useState('');
 
 
         let changeHandler = (e) => {
@@ -17,9 +17,9 @@ import { useState } from "react";
         let clickHandler = async (e) =>{
             e.preventDefault();
             console.log(signUpObj);
-            /*
             try{ 
-            let resp = await axios.post('http://localhost:3002/signup',{...signUpObj});
+            
+            let resp = await axios.post(process.env.REACT_APP_BACKEND_URL + 'signup',{...signUpObj});
             console.log("response status is "+resp.status);
             let data = await resp.data;
             console.log(data); // checking
@@ -29,60 +29,26 @@ import { useState } from "react";
             // on successful sign up , set a flag to true
             if(data) {
                 setSignUpStatus(true);
-                setDupUserMsg('data');
-                console.log(dupeUserMsg);
             }
             else {
-                setSignUpStatus(false);
                 setDupUserMsg(" Sorry,a user with that email is already registered");
                 console.log('error');
-                console.log(dupeUserMsg);
-            }
-            if (! resp.ok) {
-                setSignUpStatus(false);
-                setDupUserMsg(" Sorry,a user with that email is already registered");
-                console.log('error');
-                console.log(dupeUserMsg);
             }
 
             }
-            catch(e) {
-                setSignUpStatus(false);
+            catch(error) {
                 setDupUserMsg(" Sorry,a user with that email is already registered");
                 console.log('could not signup/store-user');
-                console.log(e);
-                console.log(dupeUserMsg);
-            }
-            */
-
-            //old code
-            try {
-                //console.log({...contactInfo});
-                const response = await axios.post('http://localhost:3002/signup',{...signUpObj});
-                console.log(response);
-                let data = response.data;
-                console.log(data);        
-                console.log("from signup response ");  
-                setSignUpStatus(true);   
-            } 
-            catch (error) {
-                console.error('Login failed:', error);                 
-                setSignUpStatus(false);
-                setDupUserMsg(" Sorry,a user with that email is already registered");
-                
-            }
-
-
+                console.log(error);
+                   }
         }
 
 
         if( !signUpStatus) { 
         return (
-            <> 
-            <h2> {dupeUserMsg}  </h2>
             <div className='row'>
                 <div className="col-sm-6 offset-3">
-                
+                <h2> {dupeUserMsg}  </h2>
                 <form>
                     <div className="mb-3">
                     <label htmlFor="name" className="form-label">Name</label>
@@ -100,7 +66,6 @@ import { useState } from "react";
                 </form>
                 </div>
             </div>
-            </>
         );
         }
         else {
@@ -109,7 +74,6 @@ import { useState } from "react";
                <h4>  Congratulations {signUpObj.name}! You are now registered with 
                 RealGrande! <br/>
                 Go Ahead and Login!
-    
                 </h4>
                 </div>
             </div>);
